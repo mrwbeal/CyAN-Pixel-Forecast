@@ -8,6 +8,7 @@ Note this repository does not contain files to run an operational forecast, but 
 
 ## File and Directory Descriptions
 
+---
 ### Model Files
 #### `cyanpixelforecast_continuous_RF.R`
 Contains model development code for a fold forward evaluation of a parallel random forest model implemented with the ranger package.
@@ -23,6 +24,7 @@ Contains model development code for a fold forward evaluation of a Bayesian MLR 
 #### `inla_pixel_florida.R`
 Model code for the lake-scale comparison forecast.
 
+---
 ### Increased Lead times
 #### `cyanpixelforecast_continuous_RF_increasedleads.R`
 Contains same development code as "cyanpixelforecast_continuous_RF.R" except develops and outputs fold foreward forecasts for 1, 2, and 4-week leads.
@@ -30,6 +32,7 @@ Contains same development code as "cyanpixelforecast_continuous_RF.R" except dev
 #### `Concatenate_Leads.R`
 Concatenates the individual fold files from each lead time.
 
+---
 ### Performance
 #### `RPSS_CRPSS.R`
 Takes forecast output files and calculates pixel-scale RPSS and CRPSS. RPSS is calculated using the WHO Alert Level 1 and 2 thresholds.
@@ -37,13 +40,18 @@ Takes forecast output files and calculates pixel-scale RPSS and CRPSS. RPSS is c
 #### `ForecastPerformance.R`
 Takes forecast output files and calculates pixel-scale categorical and determinstic skill scores.
 
-### `README.md`
-This file. It provides an overview of the project and its structure.
 
+
+---
 ### Other
 #### `SpatialAutocor.R`
 Calcualtes spatial correlation among pixels in each lake.
 
 #### `TemporalAutocor.R`
 Calcualtes temporal correlation among pixels in each lake.
+
+#### `README.md`
+This file. It provides an overview of the project and its structure.
+
+
 ---
