@@ -1,4 +1,4 @@
-# Pixel Forecast
+# CyAN Pixel Forecast
 
 Welcome to the **CyAN Pixel Forecast** project! This repository contains files and directories used in the development of a pixel-scale forecasting model for Florida lakes. It also supports the manuscript: Pixel-scale satellite forecasting of cyanobacteria in Florida lakes.
 
