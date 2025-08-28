@@ -5,7 +5,7 @@ This repository contains files and scripts used in the development of a pixel-sc
 
 It also supports the manuscript: *Pixel-scale satellite forecasting of cyanobacteria in Florida lakes.*  
 
-⚠️ **Note:** This repository does not contain files to run an operational forecast. It documents development and evaluation only.  
+ **Note:** This repository does not contain files to run an operational forecast. It documents development and evaluation only.  
 
 ---
 
