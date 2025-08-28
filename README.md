@@ -99,7 +99,7 @@ It includes code for data processing, model training, evaluation, and performanc
 ### Data
 - All data is available online, we have intentionally constructed this model with readily available datasets, that are updated at a weekly timestep.
 - Other data needed:
--  `MERIS_OLCI_Lakes`: the shapefile defining MERIS and OLCI resolvable lakes. 
+  -  `MERIS_OLCI_Lakes`: the shapefile defining MERIS and OLCI resolvable lakes. 
 
 ---
 
