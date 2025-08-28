@@ -45,7 +45,7 @@ It includes code for data processing, model training, evaluation, and performanc
 
 ### Data Processing
 - **`cyan_pixel_processing_conus.R`**  
-  Scales and extracts CI data.
+  Scales and extracts CI data from [CyAN](https://oceancolor.gsfc.nasa.gov/about/projects/cyan/).
 - **`gridMet_access.R`**  
   Accesses [GridMET](https://www.climatologylab.org/gridmet.html) THREDDS data for surface radiation and wind speed.
 - **`prism_download.R`**  
