@@ -115,5 +115,5 @@ To reproduce parts of the workflow:
 
 ---
 
-## Repository Author
-- Max Beal
+## Authors
+- Max Beal, Blake Schaeffer
