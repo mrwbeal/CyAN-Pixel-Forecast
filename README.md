@@ -115,8 +115,5 @@ To reproduce parts of the workflow:
 
 ---
 
-## Author
-- Max Beal  
-
-If you use this code, please cite:  
-Beal, M. *Pixel-scale satellite forecasting of cyanobacteria in Florida lakes.* (Manuscript link forthcoming)
+## Repository Author
+- Max Beal
