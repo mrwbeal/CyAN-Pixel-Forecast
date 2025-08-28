@@ -96,6 +96,12 @@ It includes code for data processing, model training, evaluation, and performanc
   This file.
 
 ---
+### Data
+- All data is available online, we have intentionally constructed this model with readily available datasets, that are updated at a weekly timestep.
+- Other data needed:
+-- **MERIS_OLCI_Lakes**: the shapefile defining MERIS and OLCI resolvable lakes. 
+
+---
 
 ## Getting Started
 To reproduce parts of the workflow:
@@ -105,7 +111,7 @@ To reproduce parts of the workflow:
 4. Run preprocessing scripts in **Data Processing** to generate inputs.  
 5. Run a model script from **Model Files**.  
 
-**Note** many of the data processing and model scripts require greater memory to load data into R, and greater computing power to process data in a reasonable timeframe
+**Note:** many of the data processing and model scripts require greater memory to load data into R, and greater computing power to process data in a reasonable timeframe
 
 ---
 
