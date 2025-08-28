@@ -31,11 +31,7 @@ dfm$ErrorCat <- cut(dfm$MAE, quantile(dfm$MAE, 0:8/8))
 #Start by looking at absolute error above the 90th percentile
 
 dfm$higherror = dfm$MAE>err90
-
-
 df = left_join(df,dfm,by=c("x","y"))
-
-
 
 tr = df %>% group_by(x,y,higherror) %>% summarise(chlcor = cor(chl_lead,chl,method="spearman"),
                                                   chllag2cor = cor(chl_lead,chl_lag2,method="spearman"),

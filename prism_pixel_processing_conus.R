@@ -66,7 +66,6 @@ atemp_files <- file.path('/work/HAB4CAST/max_beal/CyANPixelForecast/data','prism
 
 #atemp_spat <- rast(atemp_files) %>% project(albers_terra)
 
-
 # PRISM precip
 prism_set_dl_dir('/work/HAB4CAST/max_beal/CyANPixelForecast/data/prism_precip_data')
 precip_files <- file.path('/work/HAB4CAST/max_beal/CyANPixelForecast/data','prism_precip_data',prism_archive_ls(),paste0(prism_archive_ls(),'.bil'))
@@ -92,9 +91,7 @@ prism_pixel_byrast = function(sequence, conus_lakes, file_data){
   atemp_spat <- rast(file_data$temp[sequence]) %>% project(albers_terra)
   precip_spat <- rast(file_data$precip[sequence]) %>% project(albers_terra)
   
-
   atemp_daily_mean_per_lake <- exact_extract(atemp_spat,conus_lakes,include_xy=TRUE,include_cell=TRUE,include_cols = c("COMID"))%>% bind_rows()
-  
   precip_daily_mean_per_lake<- exact_extract(precip_spat,conus_lakes,include_xy=TRUE,include_cell=TRUE,include_cols = c("COMID"))%>% bind_rows()
   
   # Reshape data ----
@@ -107,10 +104,8 @@ prism_pixel_byrast = function(sequence, conus_lakes, file_data){
   
   mean_atemp <- atemp_daily_mean_per_lake %>% mutate(date = names(atemp_spat) %>% str_extract('[:digit:]{8}') %>% ymd(),
                                                      variable="temperature")
-  
   mean_precip<-precip_daily_mean_per_lake %>% mutate(date = names(precip_spat) %>% str_extract('[:digit:]{8}') %>% ymd(),
                                                      variable="precipitation")
-  
   #mean_prism<-merge(mean_atemp,mean_precip)
 
   mean_prism<-full_join(mean_atemp,mean_precip)
@@ -120,15 +115,8 @@ prism_pixel_byrast = function(sequence, conus_lakes, file_data){
   filename = paste0("/work/HAB4CAST/max_beal/CyANPixelForecast/data/prism_pixel_conus_lakes/daily_prism_",dt,".csv")  
   # Save the data to a CSV file
   write_csv(mean_prism, filename)
-  
   return(mean_prism)
-  
-  
 }
-
-#test = file_data[1:10,]
-#sequence = seq_along(test$temp)
-#r = prism_pixel_byrast(2,conus_lakes = conus_lakes, file_data = file_data)
 
 file_data = data.frame("temp"=atemp_files,"precip"=precip_files)
 sequence = seq_along(file_data$temp)

@@ -19,11 +19,6 @@ library(RSQLite)
 library(DBI)
 library(ggplot2)
 
-
-
-
-
-
 #Cyanobacteria files
 cyan_files = list.files("/work/HAB4CAST/max_beal/CyANPixelForecast/data/cyan_pixel_conus_lakes_current",full.names = TRUE)
 
@@ -33,7 +28,6 @@ dft$subset = year(dft$date) - (min(year(dft$date)) - 1)
 verify = dft %>% group_by(subset) %>% summarise(start_time=min(date),
                                                 end_time=max(date),
                                                 n_obs = n())
-
 
 #Watershed scale precipitation
 p = read_csv("/work/HAB4CAST/max_beal/CyANPixelForecast/data/precip_watershed_data.csv")
@@ -45,18 +39,8 @@ ws = read_csv("/work/HAB4CAST/max_beal/CyANPixelForecast/data/wind_speed_fl.csv"
 #Surface radiance (w/m^2)
 sr = read_csv("/work/HAB4CAST/max_beal/CyANPixelForecast/data/surface_radiation_fl.csv")
 
-
 #Surface water temp files
 swfn = list.files("/work/HAB4CAST/max_beal/CyANPixelForecast/data/swtemp_pixel_conus_combined_datasets",full.names = T)
-
-# oke = read_csv(swfn[100]) %>% filter(COMID==166757656)
-# 
-# 
-# ggplot(oke%>% na.omit()) + geom_tile(aes(x=x,y=y,fill=`202016PRISMARD`))
-# ggplot(oke) + geom_tile(aes(x=x,y=y,fill=`202016PRISM`))
-
-
-
 
 combine_all_sw = TRUE
 if (combine_all_sw) {
@@ -127,12 +111,12 @@ conn <- dbConnect(RSQLite::SQLite(), "/work/HAB4CAST/max_beal/CyANPixelForecast/
 query = paste("SELECT * FROM sw_temp_all_prism_ard WHERE COMID IN (", value_string, ")", sep = "")
 sw= dbGetQuery(conn, query)
 
-
+#Test plot for FL surface water data
 #ggplot(sub) + geom_point(aes(x=PRISMARDSW,y=PRISMSW))  + geom_abline(intercept = 0, slope = 1) + theme_classic()
 
-
-#166757656 Okechobee
+#166757656 Okechobee COMID
 #Join all together
+
 
 merge_datasets = function(i, fl_files, COMIDs, sw, sr, ws, p){
 
@@ -167,24 +151,22 @@ merge_datasets = function(i, fl_files, COMIDs, sw, sr, ws, p){
 
 }
 
-
-
+#Test function for merging datasets
 # test = merge_datasets(1,fl_files,COMIDs,sw,sr,ws,p)
-# 
 # plot(test$value,test$windSpeed)
-# 
 # ggplot() + geom_point(data=srsub,aes(x=x,y=y))+ geom_point(data=swpts,aes(x=x,y=y),color="blue")
 
-
+#Run merge datasets in parallel
 plan(multisession, workers = (availableCores()))
 print(availableCores())
 cb = lapply(seq_along(fl_files), merge_datasets,fl_files=fl_files,COMIDs=COMIDs,sw=sw,sr=sr,ws=ws,p=p) %>% bind_rows()
 write_csv(cb,"/work/HAB4CAST/max_beal/CyANPixelForecast/data/florida_data.csv")
 plan(sequential)
 
+
+# Read in flroida_data and run some tests
 #for some reason, read_csv thinks PRISMARDSW is a lgl
 df = fread("/work/HAB4CAST/max_beal/CyANPixelForecast/data/florida_data.csv")
-
 
 df %>% select(bloom,PRISMSW) %>% na.omit() %>% summarise(bis_cor = cor(bloom,PRISMSW,method="pearson"))
 df %>% select(bloom,precip) %>% na.omit() %>% summarise(bis_cor = cor(bloom,precip,method="pearson"))
@@ -192,10 +174,8 @@ df %>% select(bloom,PRISMARDSW) %>% na.omit() %>% summarise(bis_cor = cor(bloom,
 df %>% select(bloom,surfaceRadiation) %>% na.omit() %>% summarise(bis_cor = cor(bloom,surfaceRadiation,method="pearson"))
 df %>% select(bloom,windSpeed) %>% na.omit() %>% summarise(bis_cor = cor(bloom,windSpeed,method="pearson"))
 
-# 
 # ggplot(df %>% na.omit()) + geom_tile(aes(x=x,y=y,fill=PRISMARDSW))
 # ggplot(df %>% na.omit()) + geom_tile(aes(x=x,y=y,fill=PRISMSW))
-
 
 df %>% select(value,PRISMSW) %>% na.omit() %>% summarise(bis_cor = cor(value,PRISMSW,method="pearson"))
 df %>% select(value,precip) %>% na.omit() %>% summarise(bis_cor = cor(value,precip,method="pearson"))
@@ -203,12 +183,9 @@ df %>% select(value,PRISMARDSW) %>% na.omit() %>% summarise(bis_cor = cor(value,
 df %>% select(value,surfaceRadiation) %>% na.omit() %>% summarise(bis_cor = cor(value,surfaceRadiation,method="pearson"))
 df %>% select(value,windSpeed) %>% na.omit() %>% summarise(bis_cor = cor(value,windSpeed,method="pearson"))
 
-
 ggplot(df, aes(x=PRISMARDSW, y=PRISMSW) ) +
   geom_bin2d() + scale_fill_viridis_c() +
   theme_bw()
 
-
 test= df %>% filter(!is.na(PRISMARDSW))
-
 ggplot(test, aes(x=x,y=y)) + geom_tile()
